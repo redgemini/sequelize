@@ -1,0 +1,37 @@
+/*colors #c47ba8  #ab377d  color:#fa331c */
+
+body {
+    width: 99%;
+    height: 600px;
+    background-color: #ab377d;
+}
+
+#top-bar {
+    margin-top: 40px;
+}
+
+.enter_section {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+task {
+    border-color: black;
+    border-style: solid;
+    border-width: 3px;
+}
+
+.button-size {
+    padding-bottom: 20px;
+}
+
+#text-enter-button {
+    margin-top: 10px;
+    margin-bottom: 18px;
+}
+
+h1, p {
+   
+    color: #e4dbcd;
+}
