@@ -1,7 +1,6 @@
 //burgerController test
 console.log("load burgerController.js test"); 
 
-//routers go here
 var express = require("express");
 
 var router = express.Router();
@@ -17,7 +16,7 @@ router.get("/", function (req, res) {
 // get route, edited to match sequelize
 router.get("/burgers", function (req, res) {
   // replace old function with sequelize function
-  db.burger.findAll()
+  db.Burger.findAll()
     // use promise method to pass the burgers...
     .then(function (dbburger) {
       console.log(dbburger);
