@@ -1,52 +1,60 @@
 //burgerController test
-console.log("load BurgerController.js test"); 
+console.log("load burgerController.js test"); 
 
 //routers go here
-
 var express = require("express");
+
 var router = express.Router();
+// edit burger model to match sequelize
+var db = require("../models/");
 
-//Import burger.js to use db
-var burger = require("../models/burger.js");
-
-// create routes
-router.get("/", function(req, res) {
+// get route -> index
+router.get("/", function (req, res) {
+  // send us to the next get function instead.
   res.redirect("/burgers");
 });
 
-router.get("/burgers", function(req, res) {
-    
-  // express callback response by calling burger.selectAllBurger
-  burger.all(function(burgerData) {
-
-    //MySQL query callback will return burger_data
-    res.render("index", { burger_data: burgerData });
-
-  });
+// get route, edited to match sequelize
+router.get("/burgers", function (req, res) {
+  // replace old function with sequelize function
+  db.burger.findAll()
+    // use promise method to pass the burgers...
+    .then(function (dbburger) {
+      console.log(dbburger);
+      // into the main index, updating the page
+      var hbsObject = {
+        burger: dbburger
+      };
+      return res.render("index", hbsObject);
+    });
 });
 
-// post route 
-router.post("/burgers/create", function(req, res) {
-
-  // takes the request for burger.addBurger
-  burger.create(req.body.burger_name, function(result) {
-
-    //callback will return a log to console,
-    console.log(result);
-    res.redirect("/");
-
-  });
+// post route to create burgers
+router.post("/burgers/create", function (req, res) {
+  // edited burger create to add in a burger_name
+  db.burger.create({
+      burger_name: req.body.burger_name
+    })
+    // pass the result of our call
+    .then(function (dbburger) {
+      // log the result to our terminal/bash window
+      console.log(dbburger);
+      // redirect
+      res.redirect("/");
+    });
 });
 
-// put route - back to index
-router.put("/burgers/:id", function(req, res) {
-  burger.update(req.params.id, function(result) {
-
-    // console.log db update callback
-    console.log(result);
-
-    // Send back response
-    res.sendStatus(200);
+// put route to devour a burger
+router.put("/burgers/update/:id", function (req, res) {
+  // update one of the burgers
+  db.burger.update({
+    devoured: true
+  }, {
+    where: {
+      id: req.params.id
+    }
+  }).then(function (dbburger) {
+    res.json("/");
   });
 });
 

@@ -1,11 +1,8 @@
 //burger.js test
 console.log("load burger.js test"); 
 
-// burger_name attribute 
-// devoured attribute = false
-
 module.exports = function (sequelize, DataTypes) {
-  var Burger = sequelize.define("burger", {
+  var burger = sequelize.define("burger", {
     burger_name: DataTypes.STRING,
     devoured: {
       type: DataTypes.BOOLEAN,
@@ -14,7 +11,7 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function (models) {
-      
+        // associations can be defined here
       }
     }
   });
